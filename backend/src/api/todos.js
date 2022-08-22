@@ -1,50 +1,50 @@
-import { v4 } from 'uuid';
-let todos = [
-  {
-    id: v4(),
-    title: 'Learn Node.js',
-    done: false,
-  },
-  {
-    id: v4(),
-    title: 'Learn React.js',
-    done: true,
-  },
-  {
-    id: v4(),
-    title: 'Learn MERN Stack',
-    done: false,
-  },
-];
-export const getTodos = (req, res) => {
-  res.status(200).json({ todos: todos });
-};
-export const getTodo = (req, res) => {
-  const { id } = req.params;
-  const todo = todos.filter((t) => t.id === id);
-  res.status(200).json(todo);
-};
-export const createTodo = (req, res) => {
-  const { title } = req.body;
-  todos.push({ id: v4(), title, done: false });
-  res.status(200).json({ todos: todos });
-};
-export const updateTodo = (req, res) => {
-  const { id } = req.params;
-  const { title, done } = req.body;
+import Todo from '../models/Todo';
 
-  const updatedTodo = todos.filter((todo) => todo.id === id);
-  todos = todos.map((t) => {
-    if (t.id === id) return { id, title, done };
-    else return t;
-  });
-  res.status(200).json(todos);
+export const getTodos = async (req, res) => {
+  try {
+    const todos = await Todo.find({});
+    console.log(todos);
+    res.status(200).json({ todos: todos });
+  } catch (error) {
+    res.status(500).json({ message: 'Error getting todos' });
+  }
 };
-export const deleteTodo = (req, res) => {
-  const { id } = req.params;
-  const deletedTodo = todos.filter((todo) => todo.id === id);
-
-  const deletedIndex = todos.indexOf(deleteTodo);
-  todos.splice(deletedIndex, 1);
-  res.status(200).json(todos);
+export const getTodo = async (req, res) => {
+  try {
+    const data = await Todo.find({ _id: req.params.id });
+    res.status(200).json({ todo: data });
+  } catch (error) {
+    res.status(500).json({ message: 'Error getting todo' });
+  }
+};
+export const createTodo = async (req, res) => {
+  try {
+    const data = new Todo(req.body);
+    await data.save();
+    console.log(data);
+    const todos = await Todo.find({});
+    res.status(200).json({ todos: todos });
+  } catch (error) {
+    res.status(500).json({ message: 'Error creating the todos' });
+  }
+};
+export const updateTodo = async (req, res) => {
+  try {
+    await Todo.findOneAndUpdate({ _id: req.params.id }, req.body);
+    const allTodos = await Todo.find({});
+    res.status(200).json({ todos: allTodos });
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating todo' });
+  }
+};
+export const deleteTodo = async (req, res) => {
+  try {
+    await Todo.remove({ _id: req.params.id });
+    const todos = await Todo.find();
+    res
+      .status(200)
+      .json({ message: 'Todo item was deleted successfully', todos: todos });
+  } catch (err) {
+    res.status(500).json({ message: 'Error deleting todo' });
+  }
 };

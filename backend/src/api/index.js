@@ -7,7 +7,7 @@ router.get('/', (req, res) => {
 router
   .get('/todos', getTodos)
   .get('/todos/:id', getTodo)
-  .post('/todos/create', createTodo)
+  .post('/todos', createTodo)
   .put('/todos/:id', updateTodo)
   .delete('/todos/:id', deleteTodo);
 export default router;
