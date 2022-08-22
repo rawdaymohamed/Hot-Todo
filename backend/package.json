@@ -1,0 +1,29 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "The backend of a todo list web app",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --experimental-json-modules --exec babel-node server.js",
+    "debug": "DEBUG=express:* nodemon --experimental-json-modules --exec babel-node server.js",
+    "test": "mocha --recursive --exit"
+  },
+  "keywords": [
+    "JavaScript",
+    "todo",
+    "list"
+  ],
+  "author": "Rawda Yasser",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/cli": "^7.18.10",
+    "@babel/core": "^7.18.13",
+    "@babel/node": "^7.18.10",
+    "@babel/preset-env": "^7.18.10",
+    "body-parser": "^1.20.0",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "mongoose": "^6.5.2",
+    "nodemon": "^2.0.19"
+  }
+}
