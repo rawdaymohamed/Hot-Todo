@@ -5,7 +5,8 @@ import TodoList from './todos/TodoList';
 function App() {
   return (
     <>
-      <h2>Hot Todo</h2>
+      <h2 className='text-center text-2xl m-5'>Hot Todo</h2>
+      <div className='divider px-20'></div>
       <TodoList />
     </>
   );
