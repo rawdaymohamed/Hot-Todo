@@ -1,9 +1,17 @@
 import { useInput } from '../hooks/useInput';
-const NewTodoForm = () => {
+import { connect } from 'react-redux';
+import { createTodo } from './actions';
+const NewTodoForm = ({ todos, onCreatePressed }) => {
   const [titleProps, resetTitle] = useInput('');
   const submitForm = (e) => {
     e.preventDefault();
-    resetTitle('');
+    const isDuplicateTitle = todos.some(
+      (todo) => todo.title === titleProps.value
+    );
+    if (!isDuplicateTitle) {
+      onCreatePressed(titleProps.value);
+      resetTitle('');
+    }
   };
   return (
     <form onSubmit={(e) => submitForm(e)} className='m-5 text-center'>
@@ -20,4 +28,11 @@ const NewTodoForm = () => {
     </form>
   );
 };
-export default NewTodoForm;
+const mapStateToProps = (state) => ({
+  todos: state.todos,
+});
+const mapDispatchToProps = (dispatch) => ({
+  onCreatePressed: (title) => dispatch(createTodo(title)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewTodoForm);
