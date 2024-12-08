@@ -41,7 +41,7 @@ npm -v
 1. Clone the repository
 
 ```
-git clone https://github.com/rawda-developer/Hot-Todo
+git clone https://github.com/rawdaymohamed/Hot-Todo
 cd Hot-Todo
 ```
 
@@ -71,4 +71,4 @@ npm start
 
 ## ✍️ Authors <a name = "authors"></a>
 
-- [@RawdaDeveloper](https://github.com/rawda-developer/) - Idea & Initial work
+- [@RawdaDeveloper](https://github.com/rawdaymohamed/) - Idea & Initial work
